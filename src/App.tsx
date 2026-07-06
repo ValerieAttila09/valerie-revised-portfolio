@@ -1,11 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import Cursor from './components/common/CursorAndEntrance'
+import Navbar from './components/common/Navbar'
+import Preloader from './components/common/Preloader'
+import HeroSection from './components/sections/HeroSection'
+import AboutSection from './components/sections/AboutSection'
+import WorkSection from './components/sections/WorkSection'
+import ProcessSection from './components/sections/ProcessSection'
+import ServicesSection from './components/sections/ServicesSection'
+import TestimonialSection from './components/sections/TestimonialSection'
+import ContactSection from './components/sections/ContactSection'
+import FooterSection from './components/sections/FooterSection'
+import type { WorkItem } from './types'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const works = [
+const works: WorkItem[] = [
   {
     title: 'Lumen — Dashboard Fintech',
     category: 'Product Design / UI Engineering',
@@ -136,15 +147,6 @@ const testimonials = [
     author: 'Sri Wulandari — Creative Director, Laras Group',
   },
 ]
-
-const navLinks = [
-  { label: 'Tentang', href: '#about' },
-  { label: 'Karya', href: '#work' },
-  { label: 'Layanan', href: '#services' },
-  { label: 'Testimoni', href: '#testimonials' },
-]
-
-const mobileNavLinks = [...navLinks, { label: 'Kontak', href: '#contact' }]
 
 const socialLinks = ['Instagram', 'LinkedIn', 'Behance', 'GitHub']
 
@@ -361,316 +363,34 @@ const App = () => {
   return (
     <div className="app-shell">
       <Cursor />
-
-      <div className={`preloader ${showPreloader ? '' : 'is-hidden'}`} ref={preloaderRef}>
-        <div className="preloader__bar" ref={preloaderBarRef} />
-        <div className="preloader__row">
-          <span className="preloader__label">Memuat portofolio</span>
-          <span className="preloader__count" ref={preloaderCountRef}>0</span>
-        </div>
-      </div>
-
-      <header className="nav" ref={navRef}>
-        <a href="#hero" className="nav__logo" onClick={() => setMobileMenuOpen(false)}>
-          Valerie<span>.</span>
-        </a>
-        <nav className="nav__links">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover-target">
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <a href="#contact" className="nav__cta hover-target">
-          Hubungi Saya
-        </a>
-        <button
-          className="nav__burger"
-          id="burgerBtn"
-          aria-label="Buka menu"
-          onClick={() => setMobileMenuOpen(true)}
-        >
-          <span />
-          <span />
-        </button>
-      </header>
-
-      <div className={`mobile-menu ${mobileMenuOpen ? 'is-open' : ''}`}>
-        <button className="mobile-menu__close" onClick={() => setMobileMenuOpen(false)}>
-          Tutup ✕
-        </button>
-        <ul>
-          {mobileNavLinks.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="mm-link" onClick={() => setMobileMenuOpen(false)}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className="mobile-menu__meta">
-          Jakarta, Indonesia — GMT+7
-          <br />
-          valerieattilaalfath@gmail.com
-        </div>
-      </div>
+      <Preloader
+        show={showPreloader}
+        preloaderRef={preloaderRef}
+        preloaderBarRef={preloaderBarRef}
+        preloaderCountRef={preloaderCountRef}
+      />
+      <Navbar
+        mobileMenuOpen={mobileMenuOpen}
+        onOpenMobileMenu={() => setMobileMenuOpen(true)}
+        onCloseMobileMenu={() => setMobileMenuOpen(false)}
+        navRef={navRef}
+      />
 
       <main>
-        <section className="hero" id="hero">
-          <div className="container">
-            <div className="hero__eyebrow eyebrow">Creative Developer &amp; Product Designer — Berbasis di Indonesia</div>
-            <h1 className="hero__title">
-              <span className="reveal-line">
-                <span>Merancang pengalaman digital</span>
-              </span>
-              <span className="reveal-line">
-                <span>
-                  yang terasa <em>hidup.</em>
-                </span>
-              </span>
-            </h1>
-            <p className="hero__sub fade-up" ref={heroSubRef}>
-              Valerie Attila Al-fath — memadukan estetika editorial dengan rekayasa frontend yang presisi untuk studio, startup, dan brand yang serius soal detail.
-            </p>
-            <div className="hero__actions fade-up" ref={heroActionsRef}>
-              <a href="#work" className="btn btn--solid hover-target">
-                Lihat Karya ↓
-              </a>
-              <a href="#contact" className="btn btn--ghost hover-target">
-                Mulai Proyek
-              </a>
-            </div>
-          </div>
-
-          <div className="hero__bottom">
-            <div className="marquee">
-              <div className="marquee__track" id="marqueeTrack">
-                <span>UI/UX DESIGN</span>
-                <span>FRONTEND DEVELOPMENT</span>
-                <span>MOTION DESIGN</span>
-                <span>BRAND IDENTITY</span>
-                <span>CREATIVE CODING</span>
-                <span>UI/UX DESIGN</span>
-                <span>FRONTEND DEVELOPMENT</span>
-                <span>MOTION DESIGN</span>
-                <span>BRAND IDENTITY</span>
-                <span>CREATIVE CODING</span>
-              </div>
-            </div>
-            <div className="container hero__meta">
-              <span id="clock">--:--:--</span>
-              <span>Scroll untuk menjelajah ↓</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="about section-pad" id="about">
-          <div className="container">
-            <div className="eyebrow fade-up">Tentang</div>
-            <div className="about__grid" style={{ marginTop: '36px' }}>
-              <div className="about__quote fade-up">
-                Desain yang baik terasa <span className="italic">jujur</span> — tidak berlebihan, tidak juga kurang.
-              </div>
-              <div className="about__body">
-                <p className="fade-up">
-                  Selama lebih dari enam tahun, saya membantu studio, startup, dan brand menerjemahkan ide menjadi antarmuka yang rapi dan berkarakter. Latar belakang saya di desain editorial mengajarkan saya bahwa tipografi dan jarak bukan hiasan — itu cara pesan disampaikan.
-                </p>
-                <p className="fade-up">
-                  Saya percaya detail kecil — jeda animasi, kontras warna, rasio antar elemen — adalah pembeda antara produk yang biasa dengan produk yang diingat orang.
-                </p>
-              </div>
-            </div>
-            <div className="about__stats">
-              <div className="stat">
-                <div className="stat__num">
-                  <span className="count" data-target="6">0</span>
-                  <span className="accentmark">+</span>
-                </div>
-                <div className="stat__label">Tahun Pengalaman</div>
-              </div>
-              <div className="stat">
-                <div className="stat__num">
-                  <span className="count" data-target="48">0</span>
-                </div>
-                <div className="stat__label">Proyek Diselesaikan</div>
-              </div>
-              <div className="stat">
-                <div className="stat__num">
-                  <span className="count" data-target="22">0</span>
-                </div>
-                <div className="stat__label">Klien di 3 Benua</div>
-              </div>
-              <div className="stat">
-                <div className="stat__num">
-                  <span className="count" data-target="12">0</span>
-                </div>
-                <div className="stat__label">Penghargaan Desain</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="work section-pad" id="work">
-          <div className="container">
-            <div className="section-head">
-              <div>
-                <div className="eyebrow fade-up">Karya Pilihan</div>
-                <h2 className="fade-up">Lima proyek yang paling mewakili cara saya bekerja.</h2>
-              </div>
-              <div className="section-head__side fade-up">
-                Arahkan kursor atau scroll ke tiap baris untuk melihat pratinjau proyek.
-              </div>
-            </div>
-
-            <div className="work__grid">
-              <div className="work__sticky">
-                <div className="work__preview">
-                  <span className="work__preview-tag" id="workPreviewTag">
-                    {String(activeWork + 1).padStart(2, '0')} / {['Lumen', 'Kanvas', 'Nadi', 'Arkana', 'Serumpun'][activeWork]}
-                  </span>
-                  {works.map((work, index) => (
-                    <img
-                      key={work.title}
-                      className={`work__preview-img ${index === activeWork ? 'is-active' : ''}`}
-                      src={work.image}
-                      alt={`Pratinjau proyek ${work.title}`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="work__list">
-                {works.map((work, index) => (
-                  <div
-                    key={work.title}
-                    className={`work__row hover-target ${index === activeWork ? 'is-active' : ''}`}
-                    onMouseEnter={() => setActiveWork(index)}
-                  >
-                    <span className="work__index">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="work__title">{work.title}</span>
-                    <span className="work__cat">{work.category}</span>
-                    <span className="work__year">{work.year}</span>
-                    <div className="work__row-mobile-img">
-                      <img src={work.mobileImage} alt={work.title} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="process" ref={processSectionRef} id="processSection">
-          <div className="process__pin" id="processPin">
-            <div className="process__head">
-              <div className="eyebrow">Cara Kerja</div>
-              <h2>Empat tahap, satu tujuan: produk yang tepat guna.</h2>
-            </div>
-            <div className="process__track" id="processTrack">
-              {processSteps.map((step) => (
-                <div className="process__step" key={step.number}>
-                  <div className="process__step-num">{step.number}</div>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="services section-pad" id="services">
-          <div className="container">
-            <div className="section-head">
-              <div>
-                <div className="eyebrow fade-up">Layanan</div>
-                <h2 className="fade-up">Bagaimana saya bisa membantu proyek Anda.</h2>
-              </div>
-            </div>
-          </div>
-          <div className="services__grid">
-            {services.map((service) => (
-              <div className="service-card fade-up" key={service.title}>
-                <span className="service-card__num">{service.label}</span>
-                <div className="service-card__icon">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="testi section-pad" id="testimonials">
-          <div className="container">
-            <div className="eyebrow fade-up">Testimoni</div>
-            <div className="testi__wrap" style={{ marginTop: '40px' }}>
-              {testimonials.map((item, index) => (
-                <div key={item.author} className={`testi__item ${index === activeTestimonial ? 'is-active' : ''}`}>
-                  <p className="testi__quote">“{item.quote}”</p>
-                  <div className="testi__author">{item.author}</div>
-                </div>
-              ))}
-            </div>
-            <div className="testi__dots">
-              {testimonials.map((item, index) => (
-                <button
-                  key={item.author}
-                  className={index === activeTestimonial ? 'is-active' : ''}
-                  aria-label={`Testimoni ${index + 1}`}
-                  onClick={() => setActiveTestimonial(index)}
-                />
-              ))}
-            </div>
-
-            <div className="clients-marquee">
-              <div className="clients-marquee__track" id="clientsTrack">
-                <span>NUSANTARA CO.</span>
-                <span>ORBIT LABS</span>
-                <span>LARAS GROUP</span>
-                <span>KAYU DIGITAL</span>
-                <span>MERAK.ID</span>
-                <span>BINTANG STUDIO</span>
-                <span>NUSANTARA CO.</span>
-                <span>ORBIT LABS</span>
-                <span>LARAS GROUP</span>
-                <span>KAYU DIGITAL</span>
-                <span>MERAK.ID</span>
-                <span>BINTANG STUDIO</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="contact" id="contact">
-          <div className="container">
-            <div className="eyebrow fade-up">Kontak</div>
-            <h2 className="contact__title fade-up">
-              Mari ciptakan sesuatu yang <span className="italic" style={{ color: 'var(--accent)' }}>
-                berarti.
-              </span>
-            </h2>
-            <a href="mailto:valerieattilaalfath@gmail.com" className="contact__email fade-up hover-target">
-              valerieattilaalfath@gmail.com
-            </a>
-            <div className="contact__socials fade-up">
-              {socialLinks.map((link) => (
-                <a key={link} href="#" className="hover-target">
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
+        <HeroSection heroSubRef={heroSubRef} heroActionsRef={heroActionsRef} />
+        <AboutSection />
+        <WorkSection works={works} activeWork={activeWork} onSetActiveWork={setActiveWork} />
+        <ProcessSection processSteps={processSteps} processSectionRef={processSectionRef} />
+        <ServicesSection services={services} />
+        <TestimonialSection
+          testimonials={testimonials}
+          activeTestimonial={activeTestimonial}
+          onSetActiveTestimonial={setActiveTestimonial}
+        />
+        <ContactSection socialLinks={socialLinks} />
       </main>
 
-      <footer className="footer" ref={footerRef}>
-        <div className="container footer__top" style={{ width: '100%' }}>
-          <span>© 2026 Valerie Attila Al-fath. Seluruh hak dilindungi.</span>
-          <span id="footerClock">Jakarta, Indonesia — GMT+7</span>
-          <button className="back-to-top hover-target" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            Kembali ke atas ↑
-          </button>
-        </div>
-      </footer>
+      <FooterSection footerRef={footerRef} />
     </div>
   )
 }
