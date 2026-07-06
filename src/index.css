@@ -235,10 +235,8 @@ ul {
   align-items: center;
   justify-content: space-between;
   padding: 26px 48px;
-  background: transparent;
-  --nav-text: var(--ink);
-  --nav-border: var(--ink);
-  color: var(--nav-text);
+  mix-blend-mode: difference;
+  color: #fff;
   transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out);
 }
 
@@ -246,18 +244,18 @@ ul {
 .nav__links a,
 .nav__cta,
 .nav__burger span {
-  color: inherit;
+  color: #fff;
   transition: color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), background 0.35s var(--ease-out);
 }
 
 .nav__cta {
-  border-color: var(--nav-border);
-  transition: color 0.35s var(--ease-out), background 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+  border-color: currentColor;
+  background: transparent;
+  transition: opacity 0.25s var(--ease-out), border-color 0.35s var(--ease-out), color 0.35s var(--ease-out);
 }
 
-.nav.is-scrolled {
-  background: rgba(238, 240, 231, 0.84);
-  backdrop-filter: blur(16px);
+.nav__cta:hover {
+  opacity: 0.8;
 }
 
 .nav__logo {
@@ -292,7 +290,7 @@ ul {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: var(--ink);
+  background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.4s var(--ease-out);

@@ -159,6 +159,8 @@ const App = () => {
   const preloaderCountRef = useRef<HTMLSpanElement | null>(null)
   const heroSubRef = useRef<HTMLParagraphElement | null>(null)
   const heroActionsRef = useRef<HTMLDivElement | null>(null)
+  const processSectionRef = useRef<HTMLElement | null>(null)
+  const footerRef = useRef<HTMLElement | null>(null)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   useEffect(() => {
@@ -332,33 +334,6 @@ const App = () => {
         })
       },
     })
-
-    ScrollTrigger.create({
-      start: 'top -80',
-      end: 99999,
-      toggleClass: {
-        targets: '.nav',
-        className: 'is-scrolled',
-      },
-    })
-
-    const nav = navRef.current
-    if (nav) {
-      gsap.utils.toArray<HTMLElement>('.process, .contact').forEach((section) => {
-        gsap.to(nav, {
-          duration: 1,
-          ease: 'none',
-          '--nav-text': '#FBFBF7',
-          '--nav-border': '#FBFBF7',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end: 'top top',
-            scrub: true,
-          },
-        })
-      })
-    }
 
     const testimonialTimer = window.setInterval(() => {
       setActiveTestimonial((current) => (current + 1) % testimonials.length)
@@ -585,7 +560,7 @@ const App = () => {
           </div>
         </section>
 
-        <section className="process" id="processSection">
+        <section className="process" ref={processSectionRef} id="processSection">
           <div className="process__pin" id="processPin">
             <div className="process__head">
               <div className="eyebrow">Cara Kerja</div>
@@ -687,7 +662,7 @@ const App = () => {
         </section>
       </main>
 
-      <footer className="footer">
+      <footer className="footer" ref={footerRef}>
         <div className="container footer__top" style={{ width: '100%' }}>
           <span>© 2026 Valerie Attila Al-fath. Seluruh hak dilindungi.</span>
           <span id="footerClock">Jakarta, Indonesia — GMT+7</span>
