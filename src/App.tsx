@@ -23,6 +23,17 @@ const works: WorkItem[] = [
     year: '2025',
     image: 'https://picsum.photos/seed/lumen-fin/900/1100',
     mobileImage: 'https://picsum.photos/seed/lumen-fin/900/600',
+    description:
+      'Lumen adalah dashboard fintech yang membantu pengguna memantau portofolio dan metrik keuangan secara real-time. Saya bertanggung jawab untuk desain UI dan implementasi front-end interaktif.',
+    stack: ['React', 'TypeScript', 'GSAP', 'Tailwind'],
+    links: [
+      { label: 'Live Demo', href: 'https://example.com/lumen' },
+      { label: 'Repo', href: 'https://github.com/valerie/lumen' },
+    ],
+    gallery: [
+      'https://picsum.photos/seed/lumen-1/900/600',
+      'https://picsum.photos/seed/lumen-2/900/600',
+    ],
   },
   {
     title: 'Kanvas — Situs Agensi Kreatif',
@@ -30,6 +41,11 @@ const works: WorkItem[] = [
     year: '2024',
     image: 'https://picsum.photos/seed/kanvas-agency/900/1100',
     mobileImage: 'https://picsum.photos/seed/kanvas-agency/900/600',
+    description:
+      'Kanvas adalah situs untuk agensi kreatif dengan layout eksperimental dan animasi halaman berbasis GSAP. Fokus pada storytelling visual dan performa.',
+    stack: ['HTML', 'CSS', 'GSAP', 'Vite'],
+    links: [{ label: 'Live', href: 'https://example.com/kanvas' }],
+    gallery: ['https://picsum.photos/seed/kanvas-1/900/600'],
   },
   {
     title: 'Nadi — Aplikasi Pemantau Kesehatan',
@@ -37,6 +53,11 @@ const works: WorkItem[] = [
     year: '2024',
     image: 'https://picsum.photos/seed/nadi-health/900/1100',
     mobileImage: 'https://picsum.photos/seed/nadi-health/900/600',
+    description:
+      'Nadi adalah prototipe aplikasi kesehatan untuk memonitor tanda vital dan jadwal obat. Saya mengerjakan flow UX dan prototyping interaktif.',
+    stack: ['Figma', 'React Native'],
+    links: [],
+    gallery: [],
   },
   {
     title: 'Arkana — Platform E-commerce',
@@ -44,6 +65,11 @@ const works: WorkItem[] = [
     year: '2023',
     image: 'https://picsum.photos/seed/arkana-shop/900/1100',
     mobileImage: 'https://picsum.photos/seed/arkana-shop/900/600',
+    description:
+      'Arkana adalah platform e-commerce dengan fokus pada pengalaman checkout yang cepat dan modular. Saya mengimplementasikan komponen UI dan optimasi performa.',
+    stack: ['React', 'Next.js', 'GraphQL'],
+    links: [{ label: 'Case Study', href: 'https://example.com/arkana' }],
+    gallery: ['https://picsum.photos/seed/arkana-1/900/600'],
   },
   {
     title: 'Serumpun — Arsip Budaya Digital',
@@ -51,6 +77,11 @@ const works: WorkItem[] = [
     year: '2023',
     image: 'https://picsum.photos/seed/serumpun-archive/900/1100',
     mobileImage: 'https://picsum.photos/seed/serumpun-archive/900/600',
+    description:
+      'Serumpun adalah arsip digital yang menampilkan koleksi budaya dengan narasi multimedia dan transisi sinematik.',
+    stack: ['React', 'GSAP', 'Sass'],
+    links: [{ label: 'Explore', href: 'https://example.com/serumpun' }],
+    gallery: ['https://picsum.photos/seed/serumpun-1/900/600', 'https://picsum.photos/seed/serumpun-2/900/600'],
   },
 ]
 

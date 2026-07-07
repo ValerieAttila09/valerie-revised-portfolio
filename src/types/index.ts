@@ -6,6 +6,12 @@ export interface WorkItem {
   year: string
   image: string
   mobileImage: string
+
+  // baru:
+  description?: string
+  stack?: string[]           // contoh: ['React', 'GSAP', 'CSS']
+  links?: { label: string; href: string }[]
+  gallery?: string[]         // url gambar tambahan
 }
 
 export interface ProcessStep {
