@@ -146,11 +146,11 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow fade-up">Karya Pilihan</div>
-            <h2 className="fade-up">Lima proyek yang paling mewakili cara saya bekerja.</h2>
+            <div className="eyebrow fade-up">Project &amp; Experiments</div>
+            <h2 className="fade-up">Beberapa karya yang saya bangun dari belajar, bereksperimen, hingga ikut mengerjakan project nyata.</h2>
           </div>
           <div className="section-head__side fade-up">
-            Arahkan kursor atau scroll ke tiap baris untuk melihat pratinjau proyek.
+            Klik tombol View Details untuk melihat konteks project, stack yang dipakai, dan tautan sumber atau demo.
           </div>
         </div>
 
