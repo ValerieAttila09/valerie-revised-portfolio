@@ -14,7 +14,7 @@ interface WorkSectionProps {
 
 const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const contentRef = useRef<HTMLDivElement | null>(null)
+  // const contentRef = useRef<HTMLDivElement | null>(null)
   const animRef = useRef<gsap.core.Tween | null>(null)
   const lastToggleButtonRef = useRef<HTMLButtonElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
