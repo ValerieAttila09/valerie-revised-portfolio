@@ -213,54 +213,152 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
 
       {/* Modal details (rendered once) */}
       {openIndex !== null && (
-        <div ref={modalRef} className={`work__details-modal open`} role="dialog" aria-modal="true" aria-labelledby="work-title">
-          <div ref={backdropRef} className="work__details-backdrop" onMouseDown={(e) => { if (e.target === backdropRef.current) closeDetails() }} />
-          <div className="work__details-inner">
-            <div className="work__details-left" ref={contentRef}>
-              <h3 id="work-title">{works[openIndex].title}</h3>
-              <p className="work__description">{works[openIndex].description}</p>
-              {works[openIndex].stack?.length ? (
-                <p className="work__stack"><strong>Stack:</strong> {works[openIndex].stack.join(', ')}</p>
-              ) : null}
-              {works[openIndex].links?.length ? (
-                <div className="work__links">
-                  {works[openIndex].links.map((l) => (
-                    <a key={l.href} href={l.href} target="_blank" rel="noreferrer">{l.label}</a>
-                  ))}
+        <div
+          ref={modalRef}
+          className={`work__details-modal open`}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="work-title"
+        >
+          <div
+            ref={backdropRef}
+            className="work__details-backdrop"
+            onMouseDown={(e) => { if (e.target === backdropRef.current) closeDetails() }}
+          />
+
+          <div className="work__details-inner animated">
+            {/* Header */}
+            <div className="work__details-header">
+              <div className="work__details-title-group">
+                <h3 id="work-title" className="work__details-title">
+                  {works[openIndex].title}
+                </h3>
+                <div className="work__details-meta">
+                  <span className="work__details-category">
+                    {works[openIndex].category}
+                  </span>
+                  <span className="work__details-year">
+                    {works[openIndex].year}
+                  </span>
+                </div>
+              </div>
+
+              <div className="work__details-controls">
+                <div className="work__details-nav">
+                  <button
+                    type="button"
+                    className="work__nav-btn"
+                    onClick={goPrev}
+                    aria-label="Previous project"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span>Prev</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="work__nav-btn"
+                    onClick={goNext}
+                    aria-label="Next project"
+                  >
+                    <span>Next</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+
+                <button
+                  ref={closeButtonRef}
+                  type="button"
+                  className="work__close-btn"
+                  onClick={closeDetails}
+                  aria-label="Close details"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="work__details-content">
+              <div className="work__details-left">
+                <p className="work__description">
+                  {works[openIndex].description}
+                </p>
+
+                {works[openIndex].stack?.length ? (
+                  <div>
+                    <h4 className="work__section-label">Technology Stack</h4>
+                    <div className="work__stack-list">
+                      {works[openIndex].stack.map((tech) => (
+                        <span key={tech} className="work__stack-item">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {works[openIndex].links?.length ? (
+                  <div>
+                    <h4 className="work__section-label">Project Links</h4>
+                    <div className="work__links">
+                      {works[openIndex].links.map((l) => (
+                        <a
+                          key={l.href}
+                          href={l.href}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className={`work__link ${l.label === 'Source' ? 'work__link--secondary' : ''}`}
+                        >
+                          {l.label === 'Live Demo' && (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <polyline points="15 3 21 3 21 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                          {l.label === 'Source' && (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                          {l.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
+              {works[openIndex].gallery?.length ? (
+                <div className="work__details-right">
+                  <div className="work__details-gallery">
+                    {works[openIndex].gallery.map((src, idx) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt={`${works[openIndex].title} - Screenshot ${idx + 1}`}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
                 </div>
               ) : null}
             </div>
 
-            {works[openIndex].gallery?.length ? (
-              <div className="work__details-gallery">
-                {works[openIndex].gallery.map((src) => (
-                  <img key={src} src={src} alt={`${works[openIndex].title} gallery`} />
-                ))}
-              </div>
-            ) : null}
-
-            <div className="work__details-actions">
-              <div className="work__details-nav">
-                <button type="button" className="btn--link btn--icon" onClick={goPrev} aria-label="Previous project" title="Previous project">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span className="btn--text">Prev</span>
-                </button>
-                <button type="button" className="btn--link btn--icon" onClick={goNext} aria-label="Next project" title="Next project">
-                  <span className="btn--text">Next</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
-              </div>
-              <div className="work__details-close">
-                <button ref={closeButtonRef} type="button" className="btn--close" onClick={closeDetails} aria-label="Close details" title="Close details">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
-              </div>
+            {/* Footer */}
+            <div className="work__details-footer">
+              <span className="work__details-counter">
+                {String(openIndex + 1).padStart(2, '0')} / {String(works.length).padStart(2, '0')}
+              </span>
+              <span className="work__details-counter">
+                Use arrow keys to navigate
+              </span>
             </div>
           </div>
         </div>
