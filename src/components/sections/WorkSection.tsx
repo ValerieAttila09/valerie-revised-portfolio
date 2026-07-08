@@ -2,6 +2,9 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import type { FC, MouseEvent } from 'react'
 import type { WorkItem } from '../../types'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface WorkSectionProps {
   works: WorkItem[]
@@ -17,6 +20,7 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const modalRef = useRef<HTMLDivElement | null>(null)
   const backdropRef = useRef<HTMLDivElement | null>(null)
+  const rowRefs = useRef<Array<HTMLDivElement | null>>([])
   const previousBodyOverflow = useRef<string | null>(null)
 
   const closeDetails = useCallback(() => {
@@ -80,6 +84,26 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
       return (current + 1) % works.length
     })
   }, [works.length])
+
+  useEffect(() => {
+    if (window.innerWidth <= 980) return
+
+    const rows = rowRefs.current.filter(Boolean) as HTMLDivElement[]
+    if (!rows.length) return
+
+    const triggers = rows.map((row, index) => ScrollTrigger.create({
+      trigger: row,
+      start: 'top 70%',
+      end: 'bottom 70%',
+      onEnter: () => onSetActiveWork(index),
+      onEnterBack: () => onSetActiveWork(index),
+      toggleActions: 'play none none reverse',
+    }))
+
+    return () => {
+      triggers.forEach((trigger) => trigger.kill())
+    }
+  }, [onSetActiveWork, works.length])
 
   // ESC handler
   useEffect(() => {
@@ -177,6 +201,9 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
               return (
                 <div
                   key={work.title}
+                  ref={(el) => {
+                    rowRefs.current[index] = el
+                  }}
                   className={`work__row hover-target ${index === activeWork ? 'is-active' : ''}`}
                   onMouseEnter={() => onSetActiveWork(index)}
                 >
@@ -335,12 +362,12 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
                 ) : null}
               </div>
 
-              {works[openIndex].gallery?.length ? (
+              {(works[openIndex].gallery?.length ? works[openIndex].gallery : [works[openIndex].image]).length ? (
                 <div className="work__details-right">
                   <div className="work__details-gallery">
-                    {works[openIndex].gallery.map((src, idx) => (
+                    {(works[openIndex].gallery?.length ? works[openIndex].gallery : [works[openIndex].image]).map((src, idx) => (
                       <img
-                        key={src}
+                        key={`${src}-${idx}`}
                         src={src}
                         alt={`${works[openIndex].title} - Screenshot ${idx + 1}`}
                         loading="lazy"
