@@ -180,16 +180,20 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
                   className={`work__row hover-target ${index === activeWork ? 'is-active' : ''}`}
                   onMouseEnter={() => onSetActiveWork(index)}
                 >
-                  <div className="work__row-main">
-                    <span className="work__index">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="work__title">{work.title}</span>
-                    <span className="work__cat">{work.category}</span>
-                    <span className="work__year">{work.year}</span>
+                  <div className="flex justify-between items-center">
+                    <div className="flex justify-start items-center gap-4">
+                      <span className="work__index">{String(index + 1).padStart(2, '0')}</span>
+                      <div className="flex flex-col justify-start items-start">
+                        <span className="work__title">{work.title}</span>
+                        <span className="work__cat">{work.category}</span>
+                        <span className="work__year">{work.year}</span>
+                      </div>
+                    </div>
 
                     <div className="work__actions">
                       <button
                         type="button"
-                        className="btn--link"
+                        className="btn--link text-nowrap rounded-none transition-all"
                         onClick={(e) => handleToggle(index, e)}
                         aria-expanded={isOpen}
                         aria-controls={`work-detail-${index}`}
