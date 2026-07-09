@@ -320,14 +320,14 @@ ul {
 .nav__burger {
   display: none;
   flex-direction: column;
-  gap: 5px;
-  width: 28px;
+  gap: 6px;
+  width: 30px;
 }
 
 .nav__burger span {
   height: 1px;
   width: 100%;
-  background: var(--ink);
+  background: #fff;
   transition: transform 0.3s var(--ease-out), opacity 0.3s;
 }
 
@@ -1202,7 +1202,7 @@ section {
   }
 
   .work__details-inner {
-    max-height: 90vh;
+    max-height: 100vh;
     /* border-radius: 24px 24px 0 0; */
     width: 100%;
   }
