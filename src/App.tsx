@@ -392,24 +392,20 @@ const App = () => {
       })
     }
 
-    ScrollTrigger.matchMedia({
-      '(min-width: 981px)': () => {
-        const track = document.getElementById('processTrack')
-        const pin = document.getElementById('processPin')
-        if (!track || !pin) return
-        const getDistance = () => track.scrollWidth - window.innerWidth + 48
-        gsap.to(track, {
-          x: () => -getDistance(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '#processSection',
-            start: 'top top',
-            end: () => `+=${getDistance() + window.innerHeight}`,
-            scrub: 1,
-            pin,
-            invalidateOnRefresh: true,
-          },
-        })
+    const track = document.getElementById('processTrack')
+    const pin = document.getElementById('processPin')
+    if (!track || !pin) return
+    const getDistance = () => track.scrollWidth - window.innerWidth + 48
+    gsap.to(track, {
+      x: () => -getDistance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#processSection',
+        start: 'top top',
+        end: () => `+=${getDistance() + window.innerHeight}`,
+        scrub: 1,
+        pin,
+        invalidateOnRefresh: true,
       },
     })
 

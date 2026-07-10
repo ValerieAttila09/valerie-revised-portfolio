@@ -273,7 +273,7 @@ const WorkSection: FC<WorkSectionProps> = ({ works, activeWork, onSetActiveWork 
               <div className="work__details-controls">
                 <div className="work__details-nav">
                   <button
-                    type="button"
+                    type="button"proce
                     className="work__nav-btn"
                     onClick={goPrev}
                     aria-label="Previous project"
